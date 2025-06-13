@@ -113,6 +113,10 @@ class CompilerParams(pallas_core.CompilerParams):
   lowering_semantics: mgpu.core.LoweringSemantics = mgpu.core.LoweringSemantics.Lane
 
   def __post_init__(self):
+    if self.dimension_semantics is not None:
+      object.__setattr__(
+          self, "dimension_semantics", tuple(self.dimension_semantics)
+      )
     if bool(self.profile_space) ^ bool(self.profile_dir):
       raise ValueError(
           "Either both profile_space and profile_dir must be set, or neither."
